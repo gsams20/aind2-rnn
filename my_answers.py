@@ -43,7 +43,8 @@ def cleaned_text(text):
     text = text.replace('\n',' ')    # replacing '\n' with '' simply removes the sequence
     text = text.replace('\r',' ')
     text = text.replace('\xa0',' ')
-    return re.sub(r'[^A-Za-z0-9\s'+punctuation+']', '',text)
+    text = ' '.join(text.split())
+    return re.sub(r'[^A-Za-z\s'+punctuation+']', '',text)
 
 ### TODO: fill out the function below that transforms the input text and window-size into a set of input/output pairs for use with our RNN model
 def window_transform_text(text, window_size, step_size):
@@ -53,7 +54,7 @@ def window_transform_text(text, window_size, step_size):
     length = len(text)
     range_value = length-window_size
     i=0
-    while i <= range_value:
+    while i < range_value:
         inputs.append(text[i:i+window_size])
         outputs.append(text[i+window_size])
         i=i+step_size
